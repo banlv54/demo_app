@@ -1,4 +1,11 @@
 DemoApp::Application.routes.draw do
+  get "users/new"
+
+  root to: 'static_pages#home'
+  match '/contact', to: 'static_pages#contact'
+  get "static_pages/home"
+  match '/signup', to: 'users#new'
+  get "static_pages/help"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
