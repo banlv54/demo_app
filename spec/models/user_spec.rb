@@ -25,6 +25,13 @@ describe User do
   it {should respond_to (:authenticate)}
   it { should be_valid }
 
+  #Chapter 7
+
+
+
+
+  ######################################
+
   describe "when password is not present" do
   	before {@user.password = @user.password_confirmation = " "}
   	it {should_not be_valid}
@@ -99,7 +106,6 @@ describe User do
 
     describe "with invalid password" do
       let(:user_for_invalid_password) { found_user.authenticate("invalid") }
-
       it { should_not == user_for_invalid_password }
       specify { user_for_invalid_password.should be_false }
     end
