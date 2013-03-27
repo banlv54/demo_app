@@ -37,4 +37,47 @@ describe "User pages" do
           end
     	end
 	end
+
+	describe "edit" do
+		let(:user) {FactoryGirl.create(:user)}
+		before { visit edit_user_path(user) }
+		describe "page" do
+			it { should have_selector('h1', text: "Update your profile")}
+			it { should have_selector('title', text: "Edit user")}
+			it { should have_link('change', href:'http://gravatar.com/email')}
+		end
+
+		describe "with invalid information" do
+			before { click_button "Save change"}
+			it { should have_content "error"}
+		end
+		end
+  subject { page }
+
+  describe "index" do
+
+    let(:user) { FactoryGirl.create(:user) }
+
+    before(:each) do
+      sign_in user
+      visit users_path
+    end
+
+    it { should have_selector('title', text: 'All users') }
+    it { should have_selector('h1',    text: 'All users') }
+
+    describe "pagination" do
+
+      before(:all) { 30.times { FactoryGirl.create(:user) } }
+      after(:all)  { User.delete_all }
+
+      it { should have_selector('div.pagination') }
+
+      it "should list each user" do
+        User.paginate(page: 1).each do |user|
+          page.should have_selector('li', text: user.name)
+        end
+      end
+    end
+  end
 end
